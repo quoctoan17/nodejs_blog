@@ -1,43 +1,75 @@
 @use 'variables' as *;
-/* --- PHẦN CHUNG --- */
-body {
-    /* Đảm bảo phông chữ dễ đọc */
-    font-family: Arial, sans-serif;
-    background-color: #f8f9fa; /* Màu nền nhẹ */
+
+/* -------------------------------------------------------------------------- */
+/* ⚙️ CÀI ĐẶT CHUNG (CUSTOM PROPERTIES)                                */
+/* -------------------------------------------------------------------------- */
+
+:root {
+    /* Màu sắc chủ đạo (Primary/Action) */
+    --primary-color: #007bff; /* Xanh Dương (Dùng cho tiêu đề, nút "Học ngay" chính) */
+    --primary-hover-color: #0056b3;
+
+    /* Màu sắc phụ/Thành công (Secondary/Success) */
+    --success-color: #28a745; /* Xanh Lá (Dùng cho nút "Mua khóa học" trên Card) */
+    --success-hover-color: #218838;
+
+    /* Màu nền & Viền */
+    --background-light: #f8f9fa; /* Nền nhẹ toàn trang */
+    --card-background: #ffffff; /* Nền các box, card */
+    --border-color: #ced4da;
+    --shadow-light: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --shadow-hover: 0 8px 16px rgba(0, 0, 0, 0.2);
+
+    /* Typography & Kích thước */
+    --font-family: Arial, sans-serif;
+    --border-radius-base: 8px; /* Góc bo tròn chung */
+    --border-radius-card: 10px; /* Góc bo tròn cho Card */
 }
 
-/* --- PHẦN HIỂN THỊ DANH SÁCH KHÓA HỌC (Sử dụng Bootstrap) --- */
+/* -------------------------------------------------------------------------- */
+/* Phần Chung Toàn Trang                                */
+/* -------------------------------------------------------------------------- */
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--background-light);
+}
+
+a {
+    text-decoration: none; /* Đảm bảo loại bỏ gạch chân cho mọi liên kết */
+}
+
+.mt-4 {
+    margin-top: 1.5rem !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 💳 CARD KHÓA HỌC (DANH SÁCH)                                */
+/* -------------------------------------------------------------------------- */
 
 .card-course-item {
-    /* Đảm bảo thẻ khóa học có khoảng cách */
     margin-bottom: 20px;
-    /* Hiệu ứng đổ bóng nhẹ cho thẻ */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    /* Hiệu ứng chuyển động khi di chuột qua */
+    box-shadow: var(--shadow-light);
     transition:
         transform 0.3s ease,
         box-shadow 0.3s ease;
-    border: none; /* Bỏ viền mặc định của Bootstrap card */
-    border-radius: 10px; /* Góc bo tròn */
+    border: none;
+    border-radius: var(--border-radius-card); /* Góc bo tròn lớn hơn */
+    overflow: hidden; /* Quan trọng để góc bo tròn hoạt động đúng */
 }
 
 .card-course-item:hover {
-    /* Thẻ hơi nâng lên khi di chuột */
     transform: translateY(-5px);
-    /* Đổ bóng đậm hơn */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--shadow-hover);
 }
 
 .card-course-item .card-img-top {
-    /* Đảm bảo hình ảnh chiếm hết chiều rộng */
     width: 100%;
-    /* Chiều cao cố định cho hình ảnh để đồng nhất */
     height: 200px;
-    /* Đảm bảo hình ảnh được cắt và vừa vặn */
     object-fit: cover;
-    /* Bo tròn góc trên */
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    /* Góc bo tròn chỉ ở trên theo card-course-item */
+    border-top-left-radius: var(--border-radius-card);
+    border-top-right-radius: var(--border-radius-card);
 }
 
 .card-course-item .card-body {
@@ -45,203 +77,194 @@ body {
 }
 
 .card-course-item .card-title {
-    /* Tiêu đề khóa học */
     font-size: 1.25rem;
     font-weight: bold;
-    color: #007bff; /* Màu xanh nổi bật */
-    /* Cắt bớt tiêu đề nếu quá dài */
+    color: var(--primary-color);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .card-course-item .card-text {
-    /* Mô tả khóa học */
     color: #6c757d;
     font-size: 0.9rem;
-    /* Giới hạn số dòng cho mô tả */
     display: -webkit-box;
-    -webkit-line-clamp: 3; /* Hiển thị tối đa 3 dòng */
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    min-height: 54px; /* Đặt chiều cao tối thiểu cho 3 dòng */
+    min-height: 54px; /* Giữ chiều cao cố định cho mô tả 3 dòng */
 }
 
 .card-course-item .btn-primary {
-    /* Nút "Mua khóa học" */
-    background-color: #28a745; /* Màu xanh lá cây */
-    border-color: #28a745;
+    /* Nút trên card dùng màu Xanh Lá */
+    background-color: var(--success-color);
+    border-color: var(--success-color);
     width: 100%;
     margin-top: 10px;
+    border-radius: 4px; /* Đồng bộ với các nút khác */
 }
 
 .card-course-item .btn-primary:hover {
-    background-color: #218838;
-    border-color: #1e7e34;
+    background-color: var(--success-hover-color);
+    border-color: var(--success-hover-color);
 }
 
-/* Loại bỏ gạch chân cho liên kết */
-.card-course-item a {
-    text-decoration: none;
-}
-
-/* --- PHẦN TRANG CHI TIẾT KHÓA HỌC --- */
+/* -------------------------------------------------------------------------- */
+/* 📄 TRANG CHI TIẾT KHÓA HỌC                             */
+/* -------------------------------------------------------------------------- */
 
 .course-detail-container {
-    /* Thêm padding/margin cho toàn bộ phần chi tiết */
     padding: 20px 0;
 }
 
-.course-detail-container h2 {
-    /* Tiêu đề khóa học chi tiết */
-    color: #343a40;
-    margin-bottom: 20px;
-    font-size: 2rem;
+/* Container chính của nội dung (div.mt-4 bao bọc) */
+.mt-4.course-detail-wrapper {
+    /* Thêm class mới để phân biệt với form */
+    padding: 30px;
+    background-color: var(--card-background);
+    border-radius: var(--border-radius-base);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
-.course-detail-container iframe {
-    /* Video nhúng */
-    border-radius: 8px;
-    /* Đảm bảo iframe phản hồi trên màn hình nhỏ */
-    max-width: 100%;
-    height: auto;
-    /* Thêm khung nhìn tương ứng với tỷ lệ 16:9 cho iframe */
-    width: 100%;
-    aspect-ratio: 16 / 9; /* Giữ tỷ lệ 16:9 */
-}
-
-/* Đảm bảo iframe trên màn hình nhỏ sẽ co lại */
-@media (max-width: 768px) {
-    .course-detail-container .col-lg-9 {
-        padding: 0 15px;
-    }
-    .course-detail-container iframe {
-        /* Đảm bảo video chiếm toàn bộ chiều rộng cột */
-        width: 100%;
-    }
-}
-
-.course-detail-container p {
-    /* Mô tả chi tiết */
-    margin-top: 20px;
-    line-height: 1.6;
-    color: #495057;
-}
-
-.course-detail-container .col-lg-3 button {
-    /* Nút "Học ngay" */
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.1rem;
-    font-weight: bold;
-    width: 100%; /* Chiếm toàn bộ chiều rộng cột */
-    transition: background-color 0.3s ease;
-}
-
-.course-detail-container .col-lg-3 button:hover {
-    background-color: #0056b3;
-}
-
-/* Điều chỉnh lại layout trên thiết bị di động cho nút "Học ngay" */
-@media (max-width: 991px) {
-    .course-detail-container .col-lg-3 {
-        /* Thêm khoảng cách phía dưới nút trên màn hình nhỏ */
-        margin-bottom: 20px;
-    }
-}
-
-/* --- CÁC LỚP BOOTSTRAP THIẾT YẾU KHÁC (Nếu chưa được nhúng) --- */
-
-/* Đây là các lớp cơ bản nếu bạn không dùng toàn bộ thư viện Bootstrap CSS */
-.mt-4 {
-    margin-top: 1.5rem !important;
-}
-.row {
-    display: flex;
-    flex-wrap: wrap;
-    margin-right: -15px;
-    margin-left: -15px;
-}
-.col-sm-6 {
-    /* ... quy tắc cho màn hình nhỏ ... */
-}
-/* ... và các quy tắc cho col-lg-4, col-lg-9, col-lg-3 */
-
-/* Container chính cho phần chi tiết (div.mt-4) */
-.mt-4 {
-    padding: 20px; /* Thêm padding xung quanh nội dung */
-    background-color: #ffffff; /* Nền trắng cho phần chi tiết */
-    border-radius: 8px; /* Bo tròn góc container */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
-}
-
-/* --- PHẦN NÚT "HỌC NGAY" (col-lg-3) --- */
-
-.col-lg-3 button {
-    /* Tạo kiểu cho nút */
-    background-color: #007bff; /* Màu xanh dương nổi bật */
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1.1rem;
-    font-weight: bold;
-    width: 100%; /* Chiếm toàn bộ chiều rộng cột */
-    transition:
-        background-color 0.3s ease,
-        transform 0.1s ease;
-    text-transform: uppercase;
-}
-
-.col-lg-3 button:hover {
-    background-color: #0056b3; /* Đậm hơn khi di chuột */
-}
-
-.col-lg-3 button:active {
-    transform: scale(0.98); /* Hiệu ứng nhấn nút */
-}
-
-/* Xử lý trên màn hình nhỏ (Mobile/Tablet) */
-@media (max-width: 991px) {
-    .col-lg-3 {
-        /* Đảm bảo nút có khoảng cách phía dưới nếu nó nằm trên video */
-        margin-bottom: 20px;
-    }
-}
-
-/* --- PHẦN NỘI DUNG CHÍNH (col-lg-9) --- */
 
 .col-lg-9 h2 {
-    /* Tiêu đề khóa học */
     color: #343a40;
     font-size: 2rem;
     margin-bottom: 15px;
-    border-bottom: 2px solid #e9ecef; /* Đường gạch chân nhẹ */
+    border-bottom: 2px solid #e9ecef;
     padding-bottom: 10px;
 }
 
-/* Video nhúng (iframe) */
+/* Video nhúng */
 .col-lg-9 iframe {
-    /* Đảm bảo video phản hồi trên mọi kích thước màn hình */
     width: 100%;
     max-width: 100%;
-    /* Sử dụng tỷ lệ khung hình 16:9 */
     aspect-ratio: 16 / 9;
-    border-radius: 8px; /* Bo tròn góc video */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15); /* Đổ bóng nhẹ cho video */
+    border-radius: var(--border-radius-base);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
 }
 
 .col-lg-9 p {
-    /* Mô tả khóa học */
     margin-top: 25px;
     line-height: 1.7;
     color: #495057;
     font-size: 1rem;
-    text-align: justify; /* Căn đều hai bên */
+    text-align: justify;
+}
+
+/* Nút "Học ngay" (col-lg-3) */
+.col-lg-3 button {
+    background-color: var(--primary-color); /* Màu xanh dương chủ đạo */
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px; /* Hơi khác một chút để tạo điểm nhấn */
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: bold;
+    width: 100%;
+    transition:
+        background-color 0.3s ease,
+        transform 0.1s ease;
+    text-transform: uppercase;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.col-lg-3 button:hover {
+    background-color: var(--primary-hover-color);
+}
+
+.col-lg-3 button:active {
+    transform: scale(0.98);
+}
+
+/* Xử lý Responsive */
+@media (max-width: 991px) {
+    .col-lg-3 {
+        margin-bottom: 20px; /* Thêm khoảng cách cho nút trên mobile */
+    }
+}
+@media (max-width: 768px) {
+    .course-detail-container .col-lg-9 {
+        padding: 0 15px;
+    }
+}
+
+/* -------------------------------------------------------------------------- */
+/* 📝 FORM ĐĂNG KHÓA HỌC                                */
+/* -------------------------------------------------------------------------- */
+
+/* Đồng bộ hóa container form với card/chi tiết */
+form + .mt-4 {
+    /* Giả định rằng div.mt-4 là container của form */
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: var(--card-background);
+    border-radius: var(--border-radius-base);
+    box-shadow: var(--shadow-light);
+}
+
+h3 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 30px;
+    border-bottom: 2px solid #eeeeee;
+    padding-bottom: 10px;
+    font-size: 1.75rem; /* Điều chỉnh font size cho tiêu đề form */
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #495057;
+}
+
+/* Đồng bộ hóa input */
+.form-group input[type='text'] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition:
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.form-group input[type='text']:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+}
+
+/* Nút Submit của Form (Sử dụng màu chủ đạo) */
+form .btn-primary {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-transform: uppercase;
+}
+
+form .btn-primary:hover {
+    background-color: var(--primary-hover-color);
+}
+
+.user-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    margin-right: 4px;
 }
