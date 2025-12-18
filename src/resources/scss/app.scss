@@ -1,270 +1,326 @@
-@use 'variables' as *;
+@charset "UTF-8";
 
-/* -------------------------------------------------------------------------- */
-/* ⚙️ CÀI ĐẶT CHUNG (CUSTOM PROPERTIES)                                */
-/* -------------------------------------------------------------------------- */
-
+/* ================== ROOT VARIABLES ================== */
 :root {
-    /* Màu sắc chủ đạo (Primary/Action) */
-    --primary-color: #007bff; /* Xanh Dương (Dùng cho tiêu đề, nút "Học ngay" chính) */
-    --primary-hover-color: #0056b3;
+    --primary: #007bff;
+    --primary-hover: #0056b3;
 
-    /* Màu sắc phụ/Thành công (Secondary/Success) */
-    --success-color: #28a745; /* Xanh Lá (Dùng cho nút "Mua khóa học" trên Card) */
-    --success-hover-color: #218838;
+    --success: #28a745;
+    --success-hover: #218838;
 
-    /* Màu nền & Viền */
-    --background-light: #f8f9fa; /* Nền nhẹ toàn trang */
-    --card-background: #ffffff; /* Nền các box, card */
-    --border-color: #ced4da;
-    --shadow-light: 0 4px 8px rgba(0, 0, 0, 0.1);
-    --shadow-hover: 0 8px 16px rgba(0, 0, 0, 0.2);
+    --danger: #dc3545;
 
-    /* Typography & Kích thước */
-    --font-family: Arial, sans-serif;
-    --border-radius-base: 8px; /* Góc bo tròn chung */
-    --border-radius-card: 10px; /* Góc bo tròn cho Card */
+    --bg-page: #f8f9fa;
+    --bg-card: #ffffff;
+
+    --border: #dee2e6;
+    --text-muted: #6c757d;
+
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 10px;
+
+    --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 6px 16px rgba(0, 0, 0, 0.12);
+
+    --font: Arial, sans-serif;
 }
 
-/* -------------------------------------------------------------------------- */
-/* Phần Chung Toàn Trang                                */
-/* -------------------------------------------------------------------------- */
-
+/* ================== GLOBAL ================== */
 body {
-    font-family: var(--font-family);
-    background-color: var(--background-light);
+    font-family: var(--font);
+    background: var(--bg-page);
 }
 
 a {
-    text-decoration: none; /* Đảm bảo loại bỏ gạch chân cho mọi liên kết */
+    text-decoration: none;
 }
 
-.mt-4 {
-    margin-top: 1.5rem !important;
+.page-section {
+    margin-top: 2rem;
+    background: var(--bg-card);
+    padding: 24px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
 }
 
-/* -------------------------------------------------------------------------- */
-/* 💳 CARD KHÓA HỌC (DANH SÁCH)                                */
-/* -------------------------------------------------------------------------- */
-
-.card-course-item {
-    margin-bottom: 20px;
-    box-shadow: var(--shadow-light);
-    transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease;
-    border: none;
-    border-radius: var(--border-radius-card); /* Góc bo tròn lớn hơn */
-    overflow: hidden; /* Quan trọng để góc bo tròn hoạt động đúng */
+/* Header */
+.page-section__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
 }
 
-.card-course-item:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-hover);
+.page-section__title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--primary);
 }
 
-.card-course-item .card-img-top {
-    width: 100%;
-    height: 200px;
+.page-section__link {
+    font-size: 14px;
+    color: var(--danger);
+    font-weight: 500;
+}
+
+.page-section__link:hover {
+    text-decoration: underline;
+}
+.table {
+    background: var(--bg-card);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    border: 1px solid var(--border);
+}
+
+.table thead {
+    background: #f1f3f5;
+}
+
+.table thead th {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+}
+
+.table tbody td,
+.table tbody th {
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+.table tbody tr:hover {
+    background: #f8f9fa;
+}
+
+/* Empty state */
+.table td.text-center {
+    padding: 32px;
+    color: var(--text-muted);
+    font-style: italic;
+}
+.btn-link {
+    font-weight: 500;
+    padding: 0;
+    margin-right: 12px;
+}
+
+.btn-link.edit {
+    color: var(--primary);
+}
+
+.btn-link.delete {
+    color: var(--danger);
+}
+
+.btn-link.restore {
+    color: var(--success);
+}
+
+.btn-link:hover {
+    text-decoration: underline;
+}
+.modal-content {
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+}
+
+.modal-header {
+    border-bottom: 1px solid var(--border);
+}
+
+.modal-title {
+    font-weight: 600;
+}
+
+.modal-footer .btn {
+    min-width: 100px;
+}
+@media (max-width: 768px) {
+    .table thead {
+        display: none;
+    }
+
+    .table tr {
+        display: block;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 12px;
+    }
+
+    .table td,
+    .table th {
+        display: block;
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+
+    .table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 12px;
+        font-weight: 600;
+        text-align: left;
+    }
+}
+
+/* ================== HEADER / NAVBAR ================== */
+
+.navbar {
+    padding: 12px 0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.3rem;
+    letter-spacing: 0.5px;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    font-weight: 500;
+    color: #e9ecef;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: #ffffff;
+}
+
+/* Avatar */
+.user-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
     object-fit: cover;
-    /* Góc bo tròn chỉ ở trên theo card-course-item */
-    border-top-left-radius: var(--border-radius-card);
-    border-top-right-radius: var(--border-radius-card);
+    border: 2px solid rgba(255, 255, 255, 0.6);
 }
 
-.card-course-item .card-body {
-    padding: 15px;
-}
-
-.card-course-item .card-title {
-    font-size: 1.25rem;
-    font-weight: bold;
-    color: var(--primary-color);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.card-course-item .card-text {
-    color: #6c757d;
-    font-size: 0.9rem;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    min-height: 54px; /* Giữ chiều cao cố định cho mô tả 3 dòng */
-}
-
-.card-course-item .btn-primary {
-    /* Nút trên card dùng màu Xanh Lá */
-    background-color: var(--success-color);
-    border-color: var(--success-color);
-    width: 100%;
+/* Dropdown */
+.dropdown-menu {
+    border-radius: 8px;
+    border: none;
     margin-top: 10px;
-    border-radius: 4px; /* Đồng bộ với các nút khác */
+    min-width: 200px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
-.card-course-item .btn-primary:hover {
-    background-color: var(--success-hover-color);
-    border-color: var(--success-hover-color);
+.dropdown-item {
+    font-size: 14px;
+    padding: 10px 16px;
+    font-weight: 500;
+    transition: background 0.2s ease;
 }
 
-/* -------------------------------------------------------------------------- */
-/* 📄 TRANG CHI TIẾT KHÓA HỌC                             */
-/* -------------------------------------------------------------------------- */
-
-.course-detail-container {
-    padding: 20px 0;
+.dropdown-item:hover {
+    background: #f1f3f5;
 }
 
-/* Container chính của nội dung (div.mt-4 bao bọc) */
-.mt-4.course-detail-wrapper {
-    /* Thêm class mới để phân biệt với form */
-    padding: 30px;
-    background-color: var(--card-background);
-    border-radius: var(--border-radius-base);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+/* Divider */
+.dropdown-divider {
+    margin: 6px 0;
 }
 
-.col-lg-9 h2 {
-    color: #343a40;
+/* Logout */
+.dropdown-item:last-child {
+    color: #dc3545;
+}
+
+.dropdown-item:last-child:hover {
+    background: rgba(220, 53, 69, 0.1);
+}
+
+/* Mobile */
+@media (max-width: 991px) {
+    .navbar-nav {
+        background: #212529;
+        padding: 12px;
+        border-radius: 8px;
+        margin-top: 10px;
+    }
+
+    .dropdown-menu {
+        position: static;
+        box-shadow: none;
+        background: #212529;
+    }
+
+    .dropdown-item {
+        color: #dee2e6;
+    }
+
+    .dropdown-item:hover {
+        background: rgba(255, 255, 255, 0.1);
+    }
+}
+/* ================== CREATE COURSE FORM ================== */
+
+.course-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.course-form .form-group label {
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.course-form .form-control {
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+    font-size: 14px;
+    border: 1px solid var(--border);
+}
+
+.course-form .form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 0.15rem rgba(0, 123, 255, 0.25);
+}
+/* ================== COURSE DETAIL ================== */
+
+.course-title {
     font-size: 2rem;
-    margin-bottom: 15px;
-    border-bottom: 2px solid #e9ecef;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #343a40;
+    border-bottom: 2px solid var(--border);
     padding-bottom: 10px;
 }
 
-/* Video nhúng */
-.col-lg-9 iframe {
-    width: 100%;
-    max-width: 100%;
-    aspect-ratio: 16 / 9;
-    border-radius: var(--border-radius-base);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+.course-video {
+    margin: 20px 0;
 }
 
-.col-lg-9 p {
-    margin-top: 25px;
+.course-video iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+.course-description {
+    font-size: 1rem;
     line-height: 1.7;
     color: #495057;
-    font-size: 1rem;
     text-align: justify;
 }
 
-/* Nút "Học ngay" (col-lg-3) */
-.col-lg-3 button {
-    background-color: var(--primary-color); /* Màu xanh dương chủ đạo */
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 6px; /* Hơi khác một chút để tạo điểm nhấn */
-    cursor: pointer;
-    font-size: 1.1rem;
-    font-weight: bold;
-    width: 100%;
-    transition:
-        background-color 0.3s ease,
-        transform 0.1s ease;
+/* Action button */
+.course-action-btn {
+    font-size: 1.05rem;
+    font-weight: 600;
+    padding: 14px;
     text-transform: uppercase;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
-.col-lg-3 button:hover {
-    background-color: var(--primary-hover-color);
-}
-
-.col-lg-3 button:active {
-    transform: scale(0.98);
-}
-
-/* Xử lý Responsive */
+/* Mobile */
 @media (max-width: 991px) {
-    .col-lg-3 {
-        margin-bottom: 20px; /* Thêm khoảng cách cho nút trên mobile */
+    .course-action-btn {
+        margin-bottom: 20px;
     }
-}
-@media (max-width: 768px) {
-    .course-detail-container .col-lg-9 {
-        padding: 0 15px;
-    }
-}
-
-/* -------------------------------------------------------------------------- */
-/* 📝 FORM ĐĂNG KHÓA HỌC                                */
-/* -------------------------------------------------------------------------- */
-
-/* Đồng bộ hóa container form với card/chi tiết */
-form + .mt-4 {
-    /* Giả định rằng div.mt-4 là container của form */
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 30px;
-    background-color: var(--card-background);
-    border-radius: var(--border-radius-base);
-    box-shadow: var(--shadow-light);
-}
-
-h3 {
-    text-align: center;
-    color: var(--primary-color);
-    margin-bottom: 30px;
-    border-bottom: 2px solid #eeeeee;
-    padding-bottom: 10px;
-    font-size: 1.75rem; /* Điều chỉnh font size cho tiêu đề form */
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-    color: #495057;
-}
-
-/* Đồng bộ hóa input */
-.form-group input[type='text'] {
-    width: 100%;
-    padding: 10px 12px;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    box-sizing: border-box;
-    transition:
-        border-color 0.3s ease,
-        box-shadow 0.3s ease;
-}
-
-.form-group input[type='text']:focus {
-    border-color: var(--primary-color);
-    outline: none;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
-}
-
-/* Nút Submit của Form (Sử dụng màu chủ đạo) */
-form .btn-primary {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    text-transform: uppercase;
-}
-
-form .btn-primary:hover {
-    background-color: var(--primary-hover-color);
-}
-
-.user-avatar {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    margin-right: 4px;
 }

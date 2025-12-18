@@ -1,13 +1,27 @@
-<div class="mt-4">
+<div class="page-section course-detail-container">
     <div class="row">
-        <div class="col-lg-3">
-            <button>Học ngay</button>
+        <!-- ACTION SIDEBAR -->
+        <div class="col-lg-3 mb-3">
+            <button class="btn btn-primary w-100 course-action-btn">
+                Học ngay
+            </button>
         </div>
 
+        <!-- COURSE CONTENT -->
         <div class="col-lg-9">
-            <h2>{{course.name}}</h2>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/{{course.videoId}}" title="Course detail page | Xây dựng trang chi tiết | Thực hành NodeJS" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            <p>{{course.description}}</p>
+            <h2 class="course-title">{{course.name}}</h2>
+
+            <div class="course-video">
+                <iframe 
+                    src="https://www.youtube.com/embed/{{course.videoId}}" 
+                    title="{{course.name}}"
+                    allowfullscreen>
+                </iframe>
+            </div>
+
+            <p class="course-description">
+                {{course.description}}
+            </p>
         </div>
     </div>
 </div>
