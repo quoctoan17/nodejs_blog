@@ -23,7 +23,7 @@ class CourseController {
         const course = new Course(req.body);
         course
             .save()
-            .then(() => res.redirect('/me/stored/courses'))
+            .then(() => res.redirect('/'))
             .catch(next);
     }
 
@@ -41,7 +41,7 @@ class CourseController {
     // [PUT] /courses/:id
     update(req, res, next) {
         Course.updateOne({ _id: req.params.id }, req.body)
-            .then(() => res.redirect('/me/stored/courses'))
+            .then(() => res.redirect('/'))
             .catch(next);
     }
 
@@ -70,6 +70,45 @@ class CourseController {
                 res.redirect(req.get('referer') || '/courses');
             })
             .catch(next);
+    }
+
+    //[PATCH] /courses/handle-form-actions
+    handleFormActions(req, res, next) {
+        switch (req.body.action) {
+            case 'delete':
+                Course.delete({ _id: { $in: req.body.courseIds } })
+                    .then(() => {
+                        res.redirect(req.get('referer') || '/courses');
+                    })
+                    .catch(next);
+                break;
+            default:
+                res.json({ message: 'Action is invalid!' });
+        }
+    }
+
+    // [POST] /courses/handle-trash-actions
+    handleTrashActions(req, res, next) {
+        switch (req.body.action) {
+            case 'restore':
+                Course.restore({ _id: { $in: req.body.courseIds } })
+                    .then(() => {
+                        res.redirect(req.get('referer') || '/courses');
+                    })
+                    .catch(next);
+                break;
+
+            case 'delete':
+                Course.deleteMany({ _id: { $in: req.body.courseIds } })
+                    .then(() => {
+                        res.redirect(req.get('referer') || '/courses');
+                    })
+                    .catch(next);
+                break;
+
+            default:
+                res.json({ message: 'Action is invalid!' });
+        }
     }
 }
 
